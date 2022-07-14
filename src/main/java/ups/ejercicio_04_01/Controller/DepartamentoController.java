@@ -17,11 +17,12 @@ import ups.ejercicio_04_01.Service.EmpresaService;
  * @author Diego
  */
 public class DepartamentoController {
+    
     private final DepartamentoService departamentoService = new DepartamentoService();
     public final EmpresaService empresaService = new EmpresaService();
     public final EmpleadoService empleadoService = new EmpleadoService();
             
-    public Departamento crearDepartamento(int codigo, String nombre, Empresa empresa, String ubicacion){
+    public Departamento crearDepartamento(int codigo, String nombre, Empresa empresa, String ubicacion) throws RuntimeException{
         return departamentoService.crearDepartamento(new Departamento(codigo, nombre, empresa, ubicacion));
     }
     

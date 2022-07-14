@@ -227,7 +227,7 @@ public class DepartamentoVentana extends javax.swing.JInternalFrame {
         agregar();
         clearDepartamento();
         mostrarTablaDepartamentos();
-        JOptionPane.showMessageDialog(this, "Departamento Agregado!");
+        
     }//GEN-LAST:event_jButtonAgregarDepartamentoActionPerformed
 
     private void jButtonMostrarDepartamentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMostrarDepartamentosActionPerformed
@@ -250,7 +250,10 @@ public class DepartamentoVentana extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButtonEditarDepActionPerformed
 
     private void agregar(){
-         var departamentoNuevo = departamentoController.crearDepartamento(Integer.parseInt(jTextFieldCodigoDepartamento.getText()), 
+         
+        
+        try {
+          var departamentoNuevo = departamentoController.crearDepartamento(Integer.parseInt(jTextFieldCodigoDepartamento.getText()), 
                 jTextFieldNombreDepartamento.getText(), getEmpresaFromComboBox(), jTextFieldUbicacionDepartamento.getText());
         
         // Si se tiene cedula del empleado en el campo gerente se le asigna a departamento
@@ -271,7 +274,13 @@ public class DepartamentoVentana extends javax.swing.JInternalFrame {
             
         }
         
-        System.out.println("Departamento agregado !");
+         System.out.println("Departamento agregado !");
+         JOptionPane.showMessageDialog(this, "Departamento Agregado!");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        
     }
     
     private Empresa getEmpresaFromComboBox(){

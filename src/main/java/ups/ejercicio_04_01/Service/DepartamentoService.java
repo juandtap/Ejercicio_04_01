@@ -19,8 +19,12 @@ public class DepartamentoService implements IDepartamentoService{
 
     @Override
     public Departamento crearDepartamento(Departamento departamento) {
+        if (codeExists(departamento.getCodigo())) {
+           throw new RuntimeException("El codigo de departamento ("+departamento.getCodigo()+") ya existe");
+        }
         listaDepartamentos.add(departamento);
-        return departamento;
+        return departamento; 
+        
     }
 
     @Override
@@ -68,6 +72,14 @@ public class DepartamentoService implements IDepartamentoService{
         return -1;
     }
     
-    
+    private boolean codeExists(int code){
+        
+        for (var dep: listaDepartamentos) {
+            if (dep.getCodigo() == code) {
+                return true;
+            }
+        }
+        return false;
+    }
     
 }
