@@ -231,14 +231,23 @@ public class DepartamentoVentana extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButtonAgregarDepartamentoActionPerformed
 
     private void jButtonMostrarDepartamentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMostrarDepartamentosActionPerformed
-        System.out.println("DEPARTAMENTOS:\n");
-        for (Departamento dep : departamentoController.listarDepartamentos()) {
-            System.out.println(dep.mostrarInformacion());
-            System.out.println("");
+        
+        try {
+            System.out.println("DEPARTAMENTOS:\n");
+            for (Departamento dep : departamentoController.listarDepartamentos()) {
+                System.out.println(dep.mostrarInformacion());
+                System.out.println("");
+            }
+            System.out.println("----------------------------------------------------------------------");
+            
+            
+             mostrarTablaDepartamentos();
+             
+             
+        } catch (RuntimeException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-        System.out.println("----------------------------------------------------------------------");
-
-        mostrarTablaDepartamentos();
+       
     }//GEN-LAST:event_jButtonMostrarDepartamentosActionPerformed
 
     private void jComboBoxEmpresasDepartamentoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jComboBoxEmpresasDepartamentoFocusGained
@@ -253,31 +262,42 @@ public class DepartamentoVentana extends javax.swing.JInternalFrame {
          
         
         try {
-          var departamentoNuevo = departamentoController.crearDepartamento(Integer.parseInt(jTextFieldCodigoDepartamento.getText()), 
-                jTextFieldNombreDepartamento.getText(), getEmpresaFromComboBox(), jTextFieldUbicacionDepartamento.getText());
-        
-        // Si se tiene cedula del empleado en el campo gerente se le asigna a departamento
-        if (!jTextFieldGerenteDepartamento.getText().trim().equals("cedula empleado (OPCIONAL)")){
-     
-            var gerente = departamentoController.empleadoService.getEmpleadoByCedula(jTextFieldGerenteDepartamento.getText());
-            if (gerente != null) {
-                departamentoController.asignarGerenteDepartamento(departamentoNuevo.getCodigo(), gerente);
-                // a empleado gerente tambien se le asigna el departamento 
-                departamentoController.empleadoService.asignarDepartamento(gerente.getCedula(), departamentoNuevo);
-                
-                System.out.println("Empleado: " +gerente.getCedula()+" : "+gerente.getNombre()+ " asignado como gerente en el departamento : "
-                    +departamentoNuevo.getNombre());
+            var departamentoNuevo = departamentoController.crearDepartamento(Integer.parseInt(jTextFieldCodigoDepartamento.getText()),
+                    jTextFieldNombreDepartamento.getText(), getEmpresaFromComboBox(), jTextFieldUbicacionDepartamento.getText());
+
+            // Si se tiene cedula del empleado en el campo gerente se le asigna a departamento
+            if (!jTextFieldGerenteDepartamento.getText().trim().equals("cedula empleado (OPCIONAL)")) {
+
+                var gerente = departamentoController.empleadoService.getEmpleadoByCedula(jTextFieldGerenteDepartamento.getText());
+                if (gerente != null) {
+                    departamentoController.asignarGerenteDepartamento(departamentoNuevo.getCodigo(), gerente);
+                    // a empleado gerente tambien se le asigna el departamento 
+                    departamentoController.empleadoService.asignarDepartamento(gerente.getCedula(), departamentoNuevo);
+
+                    System.out.println("Empleado: " + gerente.getCedula() + " : " + gerente.getNombre() + " asignado como gerente en el departamento : "
+                            + departamentoNuevo.getNombre());
                 
             } else{
                 System.out.println("Empleado no existe");
+                JOptionPane.showMessageDialog(this, "Empleado no Existe!","Error",JOptionPane.ERROR_MESSAGE);
             }
             
         }
         
          System.out.println("Departamento agregado !");
          JOptionPane.showMessageDialog(this, "Departamento Agregado!");
-        } catch (Exception e) {
+        } 
+        
+        // contrla que se ingrese el nombre y la ubicacion del departamento
+        catch (NullPointerException e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        // controla que se ingrese un codigo (int) del departamento
+        } catch (NumberFormatException e){
+             JOptionPane.showMessageDialog(this, "Debe ingresar un Codigo ", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        // controla que se seleccione una empresa al momento de crear un departamento
+        catch (RuntimeException e){
+             JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
         
         

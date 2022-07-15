@@ -182,10 +182,7 @@ public class DepartamentoVentanaEdicion extends javax.swing.JInternalFrame {
         
         if (opt == 0) {
             actualizar();
-            System.out.println("departamento actualizado!");
-
-            JOptionPane.showMessageDialog(this, "Departamento Actualizado!");
-            this.dispose();
+            
         }
         
        
@@ -237,28 +234,44 @@ public class DepartamentoVentanaEdicion extends javax.swing.JInternalFrame {
     
     
     private void actualizar(){
-       var departamentoNuevo = new Departamento(this.departamento.getCodigo(), jTextFieldNombreDepartamento.getText(),
-               getEmpresaFromComboBox(), jTextFieldUbicacionDepartamento.getText());
+       
         
-       departamentoController.actualizarDepartamento(this.departamento.getCodigo(), departamentoNuevo);
-        // Si se tiene cedula del empleado en el campo gerente se le asigna a departamento
-        if (!jTextFieldGerenteDepartamento.getText().trim().equals("cedula empleado (OPCIONAL)")){
-          
-            var gerente = departamentoController.empleadoService.getEmpleadoByCedula(jTextFieldGerenteDepartamento.getText());
-            if (gerente != null) {
-              
-                departamentoController.asignarGerenteDepartamento(departamentoNuevo.getCodigo(), gerente);
-                // a empleado gerente tambien se le asigna el departamento 
-                departamentoController.empleadoService.asignarDepartamento(gerente.getCedula(), departamentoNuevo);
-                
-                System.out.println("Empleado: " +gerente.getCedula()+" : "+gerente.getNombre()+ " asignado como gerente en el departamento : "
-                    +departamentoNuevo.getNombre());
-                
-            } else{
-                System.out.println("Empleado no existe");
+        try {
+            var departamentoNuevo = new Departamento(this.departamento.getCodigo(), jTextFieldNombreDepartamento.getText(),
+                    getEmpresaFromComboBox(), jTextFieldUbicacionDepartamento.getText());
+
+            departamentoController.actualizarDepartamento(this.departamento.getCodigo(), departamentoNuevo);
+            // Si se tiene cedula del empleado en el campo gerente se le asigna a departamento
+            if (!jTextFieldGerenteDepartamento.getText().trim().equals("cedula empleado (OPCIONAL)")) {
+
+                var gerente = departamentoController.empleadoService.getEmpleadoByCedula(jTextFieldGerenteDepartamento.getText());
+                if (gerente != null) {
+
+                    departamentoController.asignarGerenteDepartamento(departamentoNuevo.getCodigo(), gerente);
+                    // a empleado gerente tambien se le asigna el departamento 
+                    departamentoController.empleadoService.asignarDepartamento(gerente.getCedula(), departamentoNuevo);
+
+                    System.out.println("Empleado: " + gerente.getCedula() + " : " + gerente.getNombre() + " asignado como gerente en el departamento : "
+                            + departamentoNuevo.getNombre());
+
+                } else {
+                    System.out.println("Empleado no existe");
+                    JOptionPane.showMessageDialog(this, "Empleado no existe","Error",JOptionPane.ERROR_MESSAGE);
+                }
+
             }
             
+            
+            System.out.println("departamento actualizado!");
+
+            JOptionPane.showMessageDialog(this, "Departamento Actualizado!");
+            this.dispose();
+            
+        } catch (NullPointerException e) {
+             JOptionPane.showMessageDialog(this, e.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
         }
+        
+        
         
     }
     

@@ -23,6 +23,19 @@ public class DepartamentoController {
     public final EmpleadoService empleadoService = new EmpleadoService();
             
     public Departamento crearDepartamento(int codigo, String nombre, Empresa empresa, String ubicacion) throws RuntimeException{
+        
+        if (empresa == null) {
+            throw new RuntimeException("Empresa no encontrada");
+        }
+        
+        if (nombre.equals("")) {
+            throw new NullPointerException("Departamento debe tener un nombre");
+        }
+        
+        if (ubicacion.equals("")) {
+            throw new NullPointerException("Departamento debe tener una ubicacion");
+        }
+        
         return departamentoService.crearDepartamento(new Departamento(codigo, nombre, empresa, ubicacion));
     }
     

@@ -29,7 +29,12 @@ public class DepartamentoService implements IDepartamentoService{
 
     @Override
     public List<Departamento> listarDepartamentos() {
-       return listaDepartamentos;
+       
+        if (listaDepartamentos.isEmpty()) {
+            throw new RuntimeException("Lista de departamentos vacia!");
+        }
+        
+        return listaDepartamentos;
     }
 
     @Override
@@ -50,6 +55,15 @@ public class DepartamentoService implements IDepartamentoService{
     @Override
     public void actualizarDepartamento(int codigo, Departamento departamentoNew) {
        int posicion = getPositionDepartamento(getDepartamentoByCode(codigo));
+       
+        if (departamentoNew.getNombre().equals("")) {
+            throw new NullPointerException("Debe ingresar el nombre de departamento");
+        }
+        
+        if (departamentoNew.getUbicacion().equals("")) {
+            throw new NullPointerException("Debe ingresar la ubicacion de departamento");
+        }
+       
        listaDepartamentos.get(posicion).setNombre(departamentoNew.getNombre());
        listaDepartamentos.get(posicion).asignarGerente(departamentoNew.getGerente());
        listaDepartamentos.get(posicion).setEmpresa(departamentoNew.getEmpresa());
