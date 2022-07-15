@@ -50,7 +50,6 @@
                 <LineBorder/>
               </Border>
               <Font PropertyName="font" name="Dialog" size="12" style="1"/>
-              <Color PropertyName="color" blue="0" green="0" id="black" palette="1" red="0" type="palette"/>
             </TitledBorder>
           </Border>
         </Property>

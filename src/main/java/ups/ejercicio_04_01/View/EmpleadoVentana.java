@@ -311,11 +311,12 @@ public class EmpleadoVentana extends javax.swing.JInternalFrame {
         agregar();
         clearEmpleado();
         mostrarTablaEmpleados();
-         JOptionPane.showMessageDialog(this, "Empleado Agregado!");
+        
     }//GEN-LAST:event_jButtonAgregarEmpleadoActionPerformed
 
     private void jButtonMostrarEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMostrarEmpleadosActionPerformed
-        System.out.println("EMPLEADOS:\n");
+        try {
+         System.out.println("EMPLEADOS:\n");
         for (var emp : empleadoController.listarEmpleados()) {
             // se aniade el anio actual para calcular la edad del empleado
 
@@ -324,7 +325,11 @@ public class EmpleadoVentana extends javax.swing.JInternalFrame {
         }
         System.out.println("----------------------------------------------------------------------");
 
-        mostrarTablaEmpleados();
+        mostrarTablaEmpleados();   
+        } catch (NullPointerException e) {
+             JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
     }//GEN-LAST:event_jButtonMostrarEmpleadosActionPerformed
 
     private void jTextFieldSalarioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldSalarioKeyReleased
@@ -352,12 +357,25 @@ public class EmpleadoVentana extends javax.swing.JInternalFrame {
         }
     }
     private void agregar(){
-        empleadoController.crearEmpleado(jTextFieldCedula.getText(), jTextFieldNombre.getText(),
-                Integer.parseInt(jComboBoxAnioNac.getSelectedItem().toString()), 
-                (jComboBoxMesNac.getSelectedIndex()+1), (jComboBoxDiaNac.getSelectedIndex()+1),
-                jComboBoxNacionalidad.getSelectedItem().toString(), jTextFieldDireccion.getText(),
-                jTextFieldCargo.getText(), Float.parseFloat(jTextFieldSalario.getText()),getDepartamentoFromComboBox() );
-        System.out.println("Empleado agregado !");
+        
+        try {
+            empleadoController.crearEmpleado(jTextFieldCedula.getText(), jTextFieldNombre.getText(),
+                    Integer.parseInt(jComboBoxAnioNac.getSelectedItem().toString()),
+                    (jComboBoxMesNac.getSelectedIndex() + 1), (jComboBoxDiaNac.getSelectedIndex() + 1),
+                    jComboBoxNacionalidad.getSelectedItem().toString(), jTextFieldDireccion.getText(),
+                    jTextFieldCargo.getText(), Float.parseFloat(jTextFieldSalario.getText()), getDepartamentoFromComboBox());
+            System.out.println("Empleado agregado !");
+            JOptionPane.showMessageDialog(this, "Empleado Agregado!");  
+        }catch (NullPointerException e) {
+             JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }catch (NumberFormatException e) {
+             JOptionPane.showMessageDialog(this, "Debe ingresar numeros en salario ", "Error", JOptionPane.ERROR_MESSAGE);
+        }catch (RuntimeException e) {
+             JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        
+        
         
     }
     
