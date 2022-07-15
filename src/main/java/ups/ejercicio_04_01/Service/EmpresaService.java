@@ -18,12 +18,21 @@ public class EmpresaService implements IEmpresaService{
 
     @Override
     public Empresa crearEmpresa(Empresa empresa) {
+        
+        if (codeExists(empresa.getCodigo())) {
+            throw new RuntimeException("Codigo de la empresa ya existe!");
+        }
         listaEmpresas.add(empresa);
         return empresa;
     }
 
     @Override
     public List<Empresa> listarEmpresas() {
+        
+        if (listaEmpresas.isEmpty()) {
+            throw new RuntimeException("Lista de empresas vacia!");
+        }
+        
         return listaEmpresas;
     }
 
@@ -40,6 +49,15 @@ public class EmpresaService implements IEmpresaService{
     @Override
     public void actualizarEmpresa(int codigo, Empresa empresaNueva) {
         int posicion  = getPositionEmpresa(getEmpresaByCode(codigo));
+        
+        if (empresaNueva.getNombre().equals("")) {
+           throw new NullPointerException("Empresa debe tener un nombre");
+        }
+        
+        if (empresaNueva.getNombreFundador().equals("")) {
+           throw new NullPointerException("Empresa debe tener un fundador");
+        }
+        
         listaEmpresas.get(posicion).setNombre(empresaNueva.getNombre());
         listaEmpresas.get(posicion).setNombreFundador(empresaNueva.getNombreFundador());
         listaEmpresas.get(posicion).setPais(empresaNueva.getPais());
@@ -64,6 +82,14 @@ public class EmpresaService implements IEmpresaService{
         return -1;
     }
     
-    
+     private boolean codeExists(int code){
+        
+        for (var dep: listaEmpresas) {
+            if (dep.getCodigo() == code) {
+                return true;
+            }
+        }
+        return false;
+    }
     
 }

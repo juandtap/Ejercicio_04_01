@@ -295,7 +295,7 @@ public class DepartamentoVentana extends javax.swing.JInternalFrame {
         } catch (NumberFormatException e){
              JOptionPane.showMessageDialog(this, "Debe ingresar un Codigo ", "Error", JOptionPane.ERROR_MESSAGE);
         }
-        // controla que se seleccione una empresa al momento de crear un departamento
+        // controla que se seleccione una empresa al momento de crear un departamento o que el codigo no sea repetido
         catch (RuntimeException e){
              JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }

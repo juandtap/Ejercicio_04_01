@@ -263,20 +263,26 @@ public class EmpresaVentana extends javax.swing.JInternalFrame {
         agregarEmpresa();
         clearDataEmpresa();
         mostrarTablaEmpresas();
-        JOptionPane.showMessageDialog(this, "Empresa Agregada!");
+        
     }//GEN-LAST:event_jButtonAgregarEmpresaActionPerformed
 
     private void jButtonMostrarEmpresasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMostrarEmpresasActionPerformed
 
-        System.out.println("EMPRESAS:\n");
-        for (Empresa empresa : empresaController.listarEmpresas()) {
-            // se aniade fecha actual para mostrar la inforamacion de la empresa que incluye la antiguedad de la misma
-            System.out.println(empresa.mostrarInformacion(LocalDate.now().getYear()));
-            System.out.println("");
-        }
-        System.out.println("----------------------------------------------------------------");
+        
+        try {
+            System.out.println("EMPRESAS:\n");
+            for (Empresa empresa : empresaController.listarEmpresas()) {
+                // se aniade fecha actual para mostrar la inforamacion de la empresa que incluye la antiguedad de la misma
+                System.out.println(empresa.mostrarInformacion(LocalDate.now().getYear()));
+                System.out.println("");
+            }
+            System.out.println("----------------------------------------------------------------");
 
-        mostrarTablaEmpresas();
+            mostrarTablaEmpresas(); 
+        } catch (RuntimeException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
 
     }//GEN-LAST:event_jButtonMostrarEmpresasActionPerformed
 
@@ -287,11 +293,24 @@ public class EmpresaVentana extends javax.swing.JInternalFrame {
     // METODOS
     
     private void agregarEmpresa(){
-        empresaController.crearEmpresa(Integer.parseInt(jTextFieldCodigoEmpresa.getText()), jTextFieldNombreEmpresa.getText(),
-                jTextFieldFundadorEmpresa.getText(), jComboBoxPaisesEmpresa.getSelectedItem().toString(), jTextFieldDireccionEmpresa.getText(),
-                Integer.parseInt(jComboBoxAnioEmpresa.getSelectedItem().toString()), (jComboBoxMesEmpresa.getSelectedIndex() + 1), 
-                (jComboBoxDiaEmpresa.getSelectedIndex() + 1));
-        System.out.println("Empresa agregada !");
+        
+        try {
+            empresaController.crearEmpresa(Integer.parseInt(jTextFieldCodigoEmpresa.getText()), jTextFieldNombreEmpresa.getText(),
+                    jTextFieldFundadorEmpresa.getText(), jComboBoxPaisesEmpresa.getSelectedItem().toString(), jTextFieldDireccionEmpresa.getText(),
+                    Integer.parseInt(jComboBoxAnioEmpresa.getSelectedItem().toString()), (jComboBoxMesEmpresa.getSelectedIndex() + 1),
+                    (jComboBoxDiaEmpresa.getSelectedIndex() + 1));
+            System.out.println("Empresa agregada !");
+            JOptionPane.showMessageDialog(this, "Empresa Agregada!");
+        } catch(NullPointerException e){
+            JOptionPane.showMessageDialog(this, e.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
+        }catch (NumberFormatException e){
+             JOptionPane.showMessageDialog(this, "Debe ingresar un Codigo ", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        catch (RuntimeException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
+        } 
+        
+        
      }
     
     public void clearDataEmpresa(){

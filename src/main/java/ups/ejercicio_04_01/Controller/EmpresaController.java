@@ -20,6 +20,18 @@ public class EmpresaController {
     private final EmpresaService empresaService = new EmpresaService();
     
     public Empresa crearEmpresa(int codigo,String nombre, String nombreFundador, String pais, String direccion, int anio, int mes, int dia ){
+        
+        if (nombre.equals("")) {
+            throw new NullPointerException("Empresa debe tener un nombre");
+            
+        }
+        
+        if (nombreFundador.equals("")) {
+             throw new NullPointerException("Empresa debe tener un  fundador");
+        }
+        
+        
+        
         LocalDate fechaFundacion = LocalDate.of(anio, mes, dia);
         return empresaService.crearEmpresa(new Empresa(codigo, nombre, nombreFundador, pais, direccion, fechaFundacion));
     }

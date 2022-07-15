@@ -215,9 +215,7 @@ public class EmpresaVentanaEdicion extends javax.swing.JInternalFrame {
         
         if (opt == 0) {
             actualizar();
-            System.out.println("Empresa actualizada");
-            JOptionPane.showMessageDialog(this, "Empresa Actualizada!");
-            this.dispose();
+           
         }
         
         
@@ -251,14 +249,23 @@ public class EmpresaVentanaEdicion extends javax.swing.JInternalFrame {
     }
     
     private void actualizar(){
-        var empresaNueva = new Empresa(this.empresa.getCodigo(), jTextFieldNombreEmpresa.getText(),
-                jTextFieldFundadorEmpresa.getText(),jComboBoxPaisesEmpresa.getSelectedItem().toString(), jTextFieldDireccionEmpresa.getText(),
-                LocalDate.of(Integer.parseInt(jComboBoxAnioEmpresa.getSelectedItem().toString()), 
-                        jComboBoxMesEmpresa.getSelectedIndex()+1, jComboBoxDiaEmpresa.getSelectedIndex()+1));
+        
+        try {
+            var empresaNueva = new Empresa(this.empresa.getCodigo(), jTextFieldNombreEmpresa.getText(),
+                    jTextFieldFundadorEmpresa.getText(), jComboBoxPaisesEmpresa.getSelectedItem().toString(), jTextFieldDireccionEmpresa.getText(),
+                    LocalDate.of(Integer.parseInt(jComboBoxAnioEmpresa.getSelectedItem().toString()),
+                            jComboBoxMesEmpresa.getSelectedIndex() + 1, jComboBoxDiaEmpresa.getSelectedIndex() + 1));
+
+            System.out.println("vista: " + this.empresa.getCodigo() + "   |  " + empresaNueva.toString());
+            empresaController.actualizarEmpresa(this.empresa.getCodigo(), empresaNueva);
+            System.out.println("Empresa actualizada");
+            JOptionPane.showMessageDialog(this, "Empresa Actualizada!");
+            this.dispose(); 
+        } catch (NullPointerException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
+        }
         
         
-        System.out.println("vista: "+this.empresa.getCodigo()  +"   |  "+empresaNueva.toString());
-        empresaController.actualizarEmpresa(this.empresa.getCodigo(), empresaNueva);
     }
     
     public static void main(String args[]) {
