@@ -257,7 +257,8 @@ public class EmpleadoVentanaEdicion extends javax.swing.JInternalFrame {
 
     private void jButtonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualizarActionPerformed
        
-       int opt = JOptionPane.showConfirmDialog(this, "Esta seguro de guardar los cambios?",
+        try {
+         int opt = JOptionPane.showConfirmDialog(this, "Esta seguro de guardar los cambios?",
                 "Actualizar Empleado", JOptionPane.YES_NO_OPTION);
         if (opt == 0) {
             actualizar();
@@ -265,7 +266,13 @@ public class EmpleadoVentanaEdicion extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Empleado Actualizado!");
             this.dispose();
         }
-       
+          
+        } catch (NullPointerException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }catch (NumberFormatException e) {
+             JOptionPane.showMessageDialog(this, "Debe ingresar numeros en salario ", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
        
     }//GEN-LAST:event_jButtonActualizarActionPerformed
 
