@@ -309,7 +309,7 @@ public class EmpleadoVentana extends javax.swing.JInternalFrame {
 
     private void jButtonAgregarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarEmpleadoActionPerformed
         agregar();
-        clearEmpleado();
+        
         mostrarTablaEmpleados();
         
     }//GEN-LAST:event_jButtonAgregarEmpleadoActionPerformed
@@ -365,7 +365,8 @@ public class EmpleadoVentana extends javax.swing.JInternalFrame {
                     jComboBoxNacionalidad.getSelectedItem().toString(), jTextFieldDireccion.getText(),
                     jTextFieldCargo.getText(), Float.parseFloat(jTextFieldSalario.getText()), getDepartamentoFromComboBox());
             System.out.println("Empleado agregado !");
-            JOptionPane.showMessageDialog(this, "Empleado Agregado!");  
+            JOptionPane.showMessageDialog(this, "Empleado Agregado!"); 
+            clearEmpleado();
         }catch (NullPointerException e) {
              JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }catch (NumberFormatException e) {

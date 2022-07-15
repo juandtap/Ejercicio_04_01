@@ -261,7 +261,7 @@ public class EmpresaVentana extends javax.swing.JInternalFrame {
 
     private void jButtonAgregarEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarEmpresaActionPerformed
         agregarEmpresa();
-        clearDataEmpresa();
+        
         mostrarTablaEmpresas();
         
     }//GEN-LAST:event_jButtonAgregarEmpresaActionPerformed
@@ -301,6 +301,7 @@ public class EmpresaVentana extends javax.swing.JInternalFrame {
                     (jComboBoxDiaEmpresa.getSelectedIndex() + 1));
             System.out.println("Empresa agregada !");
             JOptionPane.showMessageDialog(this, "Empresa Agregada!");
+            clearDataEmpresa();
         } catch(NullPointerException e){
             JOptionPane.showMessageDialog(this, e.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
         }catch (NumberFormatException e){

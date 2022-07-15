@@ -225,7 +225,7 @@ public class DepartamentoVentana extends javax.swing.JInternalFrame {
 
     private void jButtonAgregarDepartamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarDepartamentoActionPerformed
         agregar();
-        clearDepartamento();
+        
         mostrarTablaDepartamentos();
         
     }//GEN-LAST:event_jButtonAgregarDepartamentoActionPerformed
@@ -286,6 +286,7 @@ public class DepartamentoVentana extends javax.swing.JInternalFrame {
         
          System.out.println("Departamento agregado !");
          JOptionPane.showMessageDialog(this, "Departamento Agregado!");
+         clearDepartamento();
         } 
         
         // contrla que se ingrese el nombre y la ubicacion del departamento
