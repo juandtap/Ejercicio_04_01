@@ -18,12 +18,20 @@ public class EmpleadoService implements IEmpleadoService{
 
     @Override
     public Empleado crearEmpleado(Empleado empleado) {
+        if(codeExists(empleado.getCedula())){
+            throw new RuntimeException("Cedula de empleado existente");
+        
+        }
         listaEmpleados.add(empleado);
         return empleado;
     }
 
     @Override
     public List<Empleado> listarEmpleados() {
+        if(listaEmpleados.isEmpty()){
+            throw new NullPointerException("Lista de empleados vacia");
+        }
+        
         return listaEmpleados;
     }
 
@@ -44,6 +52,14 @@ public class EmpleadoService implements IEmpleadoService{
     @Override
     public void actualizarEmpleado(String cedula, Empleado empleadoNuevo) {
         int posicion = getPositionEmpleado(getEmpleadoByCedula(cedula));
+        
+       
+        if (empleadoNuevo.getNombre().equals("")){
+            throw new NullPointerException("Debe ingresar un nombre");
+        }
+        if (empleadoNuevo.getCargo().equals("")){
+            throw new NullPointerException("Debe ingresar un cargo");
+        }
         listaEmpleados.get(posicion).setNombre(empleadoNuevo.getNombre());
         listaEmpleados.get(posicion).setNacionalidad(empleadoNuevo.getNacionalidad());
         listaEmpleados.get(posicion).setCargo(empleadoNuevo.getCargo());
@@ -68,6 +84,14 @@ public class EmpleadoService implements IEmpleadoService{
         }
         return -1;
     }
-    
+     private boolean codeExists(String cedula){
+        
+        for (var emp: listaEmpleados) {
+            if (emp.getCedula().equals(cedula)) {
+                return true;
+            }
+        }
+        return false;
+    }
     
 }
